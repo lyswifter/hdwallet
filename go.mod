@@ -5,7 +5,6 @@ go 1.17
 require (
 	github.com/btcsuite/btcd v0.21.0-beta
 	github.com/btcsuite/btcutil v1.0.2
-	github.com/mr-tron/base58 v1.2.0
 	github.com/shirou/gopsutil v3.21.4+incompatible
 	github.com/tyler-smith/go-bip39 v1.1.0
 )
