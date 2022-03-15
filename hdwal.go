@@ -4,7 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/binary"
 	"io"
-
+	"crypto/sha256"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/mem"
@@ -36,7 +36,8 @@ func entropy() ([]byte, error) {
 	randomBytes = append(randomBytes, float64ToByte(diskStatus.UsedPercent)...)
 	randomBytes = append(randomBytes, []byte(netWork)...)
 
-	return randomBytes, nil
+	random := sha256.Sum256(randomBytes)
+	return random[:16], nil
 }
 
 func NewMnemonic() (string, error){
