@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/binary"
+	"fmt"
 	"io"
 	"math"
 	"strconv"
@@ -15,7 +16,14 @@ import (
 	"github.com/tyler-smith/go-bip39"
 )
 
-func entropy() ([]byte, error) {
+type MnemonicType int
+
+const (
+	Mnemonic12 MnemonicType = iota
+	Mnemonic24
+)
+
+func entropy(mt MnemonicType) ([]byte, error) {
 	randomBytes := make([]byte, 0)
 	cpuPercent, _ := cpu.Percent(time.Second, false)
 	memory, _ := mem.VirtualMemory()
@@ -34,11 +42,19 @@ func entropy() ([]byte, error) {
 	randomBytes = append(randomBytes, []byte(netWork)...)
 
 	random := sha256.Sum256(randomBytes)
-	return random[:16], nil
+
+	switch mt {
+	case Mnemonic12:
+		return random[:16], nil
+	case Mnemonic24:
+		return random[:32], nil
+	default:
+		return nil, fmt.Errorf("MnemonicType err: %d", mt)
+	}
 }
 
-func NewMnemonic() (string, error) {
-	entropyBytes, err := entropy()
+func NewMnemonic(mt MnemonicType) (string, error) {
+	entropyBytes, err := entropy(mt)
 	if err != nil {
 		return "", err
 	}
