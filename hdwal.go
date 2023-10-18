@@ -94,6 +94,8 @@ func GetExtendSeedFromPath(path string, seed []byte) ([]byte, error) {
 		extendedKey = childExtendedKey
 	}
 
+	fmt.Println("extendedKey.key: ", extendedKey.key)
+
 	return extendedKey.key, nil
 }
 
