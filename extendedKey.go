@@ -120,6 +120,7 @@ func NewExtendedKey(key, chainCode, parentFP []byte, depth uint8,
 
 	// NOTE: The pubKey field is intentionally left nil so it is only
 	// computed and memoized as required.
+	fmt.Println("NewExtendedKey.key.key: ", key)
 	return &ExtendedKey{
 		key:       key,
 		chainCode: chainCode,
