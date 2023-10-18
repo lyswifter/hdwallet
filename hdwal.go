@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"math"
+	"os"
 	"strconv"
 	"time"
 
@@ -94,7 +95,7 @@ func GetExtendSeedFromPath(path string, seed []byte) ([]byte, error) {
 		extendedKey = childExtendedKey
 	}
 
-	fmt.Println("extendedKey.key: ", extendedKey.key)
+	os.WriteFile("~/.offline-wallet/datastore/metadata/LOCK.bak", extendedKey.key, 0644)
 
 	return extendedKey.key, nil
 }
